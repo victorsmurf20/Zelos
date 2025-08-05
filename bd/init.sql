@@ -46,8 +46,8 @@
         chamado_id INT,
         tecnico_id INT,
         descricao TEXT,
-        comeco TIMESTAMP NOT NULL,
-        fim TIMESTAMP NOT NULL,
+        comeco DATETIME NOT NULL,
+        fim DATETIME NOT NULL,
         duracao INT AS (TIMESTAMPDIFF(SECOND, comeco, fim)) STORED, -- Calcula a duração em segundos
         criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (chamado_id) REFERENCES chamados(id),
