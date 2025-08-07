@@ -4,8 +4,8 @@ import bcrypt from 'bcryptjs';
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'senai@123',
-    database: 'zelo', 
+    password: '',
+    database: 'zelos',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -28,6 +28,12 @@ async function readAll(table, where = null) {
 
         const [rows] = await connection.execute(sql);
         return rows;
+
+    } catch (err) {
+
+        console.error('Erro ao ler registros: ', err);
+        throw err;
+
     } finally {
         connection.release();
     }
@@ -44,13 +50,22 @@ async function read(table, where) {
 
         const [rows] = await connection.execute(sql);
         return rows[0] || null;
+
+    } catch (err) {
+
+        console.error('Erro ao ler registro: ', err);
+        throw err;
+
     } finally {
         connection.release();
     }
 }
 
+
 // Função para inserir um novo registro
 // Função assíncrona para inserir dados em uma tabela do banco de dados
+
+
 async function create(table, data) {
     // Obtém uma conexão com o banco de dados
     const connection = await getConnection();
@@ -72,6 +87,11 @@ async function create(table, data) {
 
         // Retorna o ID do registro inserido
         return result.insertId;
+    } catch (err) {
+        
+        console.error('Erro ao inserir registros: ', err);
+        throw err;
+
     } finally {
         // Libera a conexão com o banco de dados
         connection.release();
@@ -82,15 +102,16 @@ async function create(table, data) {
 async function update(table, data, where) {
     const connection = await getConnection();
     try {
-        const set = Object.keys(data)
-            .map(column => `${column} = ?`)
-            .join(', ');
+        const set = Object.keys(data).map(column => `${column} = ?`).join(', ');
 
         const sql = `UPDATE ${table} SET ${set} WHERE ${where}`;
         const values = Object.values(data);
 
         const [result] = await connection.execute(sql, [...values]);
         return result.affectedRows;
+    } catch (err) {
+        console.error('Erro ao atualizar registro: ', err);
+        throw err;
     } finally {
         connection.release();
     }
@@ -103,6 +124,11 @@ async function deleteRecord(table, where) {
         const sql = `DELETE FROM ${table} WHERE ${where}`;
         const [result] = await connection.execute(sql);
         return result.affectedRows;
+    } catch (err) {
+
+        console.error('Erro ao ler registro: ', err);
+        throw err;
+        
     } finally {
         connection.release();
     }
