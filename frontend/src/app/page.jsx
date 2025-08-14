@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import './components/login/login.css'; // O CSS importado permanece o mesmo
 
+
+
 const LoginPage = () => {
   const [user, setUser] = useState("");
 
@@ -11,6 +13,9 @@ const LoginPage = () => {
     console.log("Usuário (E-mail ou CPF):", user);
     alert(`Tentativa de login com o usuário: ${user}`);
   };
+
+
+
 
   return (
     <div className="login-page">
