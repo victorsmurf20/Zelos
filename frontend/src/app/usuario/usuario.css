@@ -1,20 +1,14 @@
 /* usuario.css */
 
-/* Reset básico */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* Variáveis de Cor com a paleta do SENAI */
+/* Reset básico e Variáveis de Cor */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --senai-azul-principal: #005197; /* Azul principal do SENAI */
-  --senai-laranja-destaque: #f58220; /* Laranja de destaque do SENAI */
-  --background-color: #f4f7fa; /* Fundo geral mais claro e moderno */
-  --table-header-bg: #e9eff5; /* Fundo do cabeçalho da tabela com tom azulado */
-  --border-color: #d1d9e6; /* Cor das bordas suavizada */
-  --text-color: #333; /* Cor do texto principal */
+  --senai-azul-principal: #005197;
+  --senai-laranja-destaque: #f58220;
+  --background-color: #f4f7fa;
+  --table-header-bg: #e9eff5;
+  --border-color: #d1d9e6;
+  --text-color: #333;
   --white: #fff;
   --status-aberto-bg: #e6f7ff;
   --status-aberto-color: #005f8b;
@@ -37,59 +31,146 @@ body {
   padding: 25px;
   background-color: var(--white);
   border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Sombra mais suave */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 .chamados-title {
   color: var(--senai-azul-principal);
   font-size: 2.2em;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   text-align: center;
-  border-bottom: 3px solid var(--senai-laranja-destaque); /* Destaque com o laranja */
+  border-bottom: 3px solid var(--senai-laranja-destaque);
   padding-bottom: 10px;
+}
+
+/* --- ESTILOS DA SEÇÃO NOVO CHAMADO --- */
+.novo-chamado-container {
+  margin-bottom: 30px;
+}
+
+/* Botão principal para abrir o formulário */
+.abrir-chamado-btn {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--senai-azul-principal);
+  background-color: transparent;
+  border: 2px solid var(--senai-azul-principal);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.abrir-chamado-btn:hover {
+  background-color: var(--senai-azul-principal);
+  color: var(--white);
 }
 
 /* Estilos do Formulário de Novo Chamado */
 .novo-chamado-form {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 15px;
-  margin-bottom: 30px;
-  padding: 20px;
+  padding: 25px;
   background-color: #f8f9fa;
   border-radius: 6px;
   border: 1px solid var(--border-color);
+  
+  /* Animação de expansão e retração */
+  overflow: hidden;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  opacity: 0;
+  transition: max-height 0.7s ease-in-out, padding 0.5s ease, opacity 0.5s ease, margin 0.5s ease;
+}
+
+/* Classe que ativa a visibilidade e animação */
+.novo-chamado-form.visible {
+  max-height: 600px; /* Altura máxima que o form pode atingir */
+  opacity: 1;
+  padding: 25px;
+  margin-top: 10px;
 }
 
 .novo-chamado-form h3 {
   width: 100%;
   color: var(--senai-azul-principal);
   font-size: 1.4em;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Botão de fechar (X) */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 2.2em;
+  line-height: 1;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+  color: var(--text-color);
 }
 
 .novo-chamado-form .input-group {
   display: flex;
-  flex-grow: 1;
-  min-width: 200px;
+  flex-direction: column;
+  width: 100%;
 }
 
-.novo-chamado-form input[type="text"] {
-  flex-grow: 1;
+.novo-chamado-form label {
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: var(--senai-azul-principal);
+}
+
+.novo-chamado-form input[type="text"],
+.novo-chamado-form select,
+.novo-chamado-form textarea {
+  width: 100%;
   padding: 12px 15px;
   border: 1px solid var(--border-color);
   border-radius: 5px;
   font-size: 1rem;
+  font-family: inherit;
   outline: none;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.novo-chamado-form input[type="text"]:focus {
+/* Estilo para o select parecer com o input */
+.novo-chamado-form select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23005197%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 15px top 50%;
+  background-size: .65em auto;
+}
+
+.novo-chamado-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.novo-chamado-form input[type="text"]:focus,
+.novo-chamado-form select:focus,
+.novo-chamado-form textarea:focus {
   border-color: var(--senai-azul-principal);
   box-shadow: 0 0 0 3px rgba(0, 81, 151, 0.15);
 }
 
-/* Botão Abrir Chamado */
 .novo-chamado-form .submit-button {
   background-color: var(--senai-laranja-destaque);
   color: var(--white);
@@ -100,15 +181,16 @@ body {
   font-size: 1rem;
   font-weight: bold;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  white-space: nowrap;
+  margin-top: 10px; /* Espaço antes do botão */
 }
 
 .novo-chamado-form .submit-button:hover {
-  background-color: #e07010; /* Laranja um pouco mais escuro no hover */
+  background-color: #e07010;
   transform: translateY(-2px);
 }
 
-/* Estilos da Tabela de Chamados */
+
+/* --- ESTILOS DA TABELA --- */
 .chamados-table {
   width: 100%;
   border-collapse: collapse;
@@ -116,10 +198,9 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.chamados-table th,
-.chamados-table td {
+.chamados-table th, .chamados-table td {
   padding: 15px;
-  border-bottom: 1px solid var(--border-color); /* Apenas borda inferior para um visual mais limpo */
+  border-bottom: 1px solid var(--border-color);
   text-align: left;
   vertical-align: middle;
 }
@@ -130,96 +211,23 @@ body {
   color: var(--senai-azul-principal);
 }
 
-.chamados-table tbody tr:last-child td {
-  border-bottom: none; /* Remove a borda da última linha */
-}
-
-.chamados-table tbody tr:hover {
-  background-color: #f1f5f9;
-}
+.chamados-table tbody tr:last-child td { border-bottom: none; }
+.chamados-table tbody tr:hover { background-color: #f1f5f9; }
 
 /* Estilos do Status (Badge) */
-.status-badge {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+.status-badge { display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; }
+.status-badge.aberto { background-color: var(--status-aberto-bg); color: var(--status-aberto-color); }
+.status-badge.em-andamento { background-color: var(--status-andamento-bg); color: var(--status-andamento-color); }
+.status-badge.concluido { background-color: var(--status-concluido-bg); color: var(--status-concluido-color); }
 
-.status-badge.aberto {
-  background-color: var(--status-aberto-bg);
-  color: var(--status-aberto-color);
-}
-
-.status-badge.em-andamento {
-  background-color: var(--status-andamento-bg);
-  color: var(--status-andamento-color);
-}
-
-.status-badge.concluido {
-  background-color: var(--status-concluido-bg);
-  color: var(--status-concluido-color);
-}
-
-/* Responsividade */
+/* --- RESPONSIVIDADE --- */
 @media (max-width: 768px) {
-  .chamados-container {
-    margin: 10px;
-    padding: 15px;
-  }
-
-  .chamados-title {
-    font-size: 1.8em;
-  }
-
-  .novo-chamado-form {
-    flex-direction: column;
-    align-items: stretch; /* Alinha os itens para preencher a largura */
-  }
-
-  .novo-chamado-form .input-group {
-    width: 100%;
-  }
-
-  .novo-chamado-form .submit-button {
-    width: 100%;
-  }
-
-  /* Adaptação da tabela para telas menores */
-  .chamados-table thead {
-      display: none; /* Esconde o cabeçalho original */
-  }
-
-  .chamados-table, .chamados-table tbody, .chamados-table tr, .chamados-table td {
-      display: block;
-      width: 100%;
-  }
-
-  .chamados-table tr {
-      margin-bottom: 15px;
-      border: 1px solid var(--border-color);
-      border-radius: 5px;
-      padding: 10px;
-  }
-
-  .chamados-table td {
-      text-align: right;
-      padding-left: 50%;
-      position: relative;
-      border: none;
-  }
-
-  .chamados-table td::before {
-      content: attr(data-label);
-      position: absolute;
-      left: 10px;
-      width: calc(50% - 20px);
-      text-align: left;
-      font-weight: bold;
-      color: var(--senai-azul-principal);
-  }
+  .chamados-container { margin: 10px; padding: 15px; }
+  .chamados-title { font-size: 1.8em; }
+  
+  .chamados-table thead { display: none; }
+  .chamados-table, .chamados-table tbody, .chamados-table tr, .chamados-table td { display: block; width: 100%; }
+  .chamados-table tr { margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 5px; padding: 10px; }
+  .chamados-table td { text-align: right; padding-left: 50%; position: relative; border: none; }
+  .chamados-table td::before { content: attr(data-label); position: absolute; left: 10px; width: calc(50% - 20px); text-align: left; font-weight: bold; color: var(--senai-azul-principal); }
 }
