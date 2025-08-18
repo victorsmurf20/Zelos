@@ -1,233 +1,297 @@
-/* usuario.css */
-
-/* Reset básico e Variáveis de Cor */
-* { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --senai-azul-principal: #005197;
-  --senai-laranja-destaque: #f58220;
-  --background-color: #f4f7fa;
-  --table-header-bg: #e9eff5;
-  --border-color: #d1d9e6;
-  --text-color: #333;
-  --white: #fff;
-  --status-aberto-bg: #e6f7ff;
-  --status-aberto-color: #005f8b;
-  --status-andamento-bg: #fffbe6;
-  --status-andamento-color: #8a6d3b;
-  --status-concluido-bg: #e6ffed;
-  --status-concluido-color: #1e6e3c;
+  --senai-vermelho-principal: #d1001f;
+  --senai-vermelho-escuro: #a80017;
+  --senai-cinza-fundo: #121212; /* fundo mais escuro */
+  --senai-cinza-borda: #2a2a2a;
+  --texto-principal: #ffffff;
+  --texto-secundario: #cccccc;
+  --white: #ffffff;
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  color: var(--text-color);
-  background-color: var(--background-color);
-}
-
+/* ===== CONTAINER ===== */
 .chamados-container {
-  max-width: 960px;
-  margin: 20px auto;
-  padding: 25px;
-  background-color: var(--white);
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  padding: 40px 20px;
+  background: var(--senai-cinza-fundo);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* ===== TÍTULO ===== */
 .chamados-title {
-  color: var(--senai-azul-principal);
-  font-size: 2.2em;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--white);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* ===== GRID DE CARDS ===== */
+.meus-chamados-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* ===== CARD ===== */
+.meus-chamado-card {
+  background: #1e1e1e;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--senai-cinza-borda);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.meus-chamado-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+}
+
+/* ===== CABEÇALHO DO CARD ===== */
+.meus-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.protocolo {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--senai-vermelho-principal);
+}
+
+/* ===== STATUS BADGES ===== */
+.status-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 16px;
+  text-transform: capitalize;
+}
+
+.status-badge.aberto {
+  background: rgba(209, 0, 31, 0.15);
+  color: var(--senai-vermelho-principal);
+}
+
+.status-badge.em-andamento {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.concluido {
+  background: #d4edda;
+  color: #155724;
+}
+
+/* ===== TEXTO DO CARD ===== */
+.meus-chamado-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: var(--texto-principal);
+}
+
+.meus-chamado-card p {
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  color: var(--texto-secundario);
+  line-height: 1.4;
+}
+
+/* ===== BOTÃO DETALHES ===== */
+.detalhes-btn {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--senai-vermelho-principal);
+  color: var(--white);
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.detalhes-btn:hover {
+  background-color: var(--senai-vermelho-escuro);
+}
+
+/* ===== BOTÃO ABRIR CHAMADO ===== */
+.novo-chamado-container {
   margin-bottom: 20px;
   text-align: center;
-  border-bottom: 3px solid var(--senai-laranja-destaque);
-  padding-bottom: 10px;
 }
 
-/* --- ESTILOS DA SEÇÃO NOVO CHAMADO --- */
-.novo-chamado-container {
-  margin-bottom: 30px;
-}
-
-/* Botão principal para abrir o formulário */
 .abrir-chamado-btn {
-  width: 100%;
-  padding: 15px;
-  font-size: 1.1em;
-  font-weight: bold;
-  color: var(--senai-azul-principal);
-  background-color: transparent;
-  border: 2px solid var(--senai-azul-principal);
-  border-radius: 6px;
+  background: var(--senai-vermelho-principal);
+  color: var(--white);
+  border: none;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.2s ease;
 }
 
 .abrir-chamado-btn:hover {
-  background-color: var(--senai-azul-principal);
-  color: var(--white);
+  background: var(--senai-vermelho-escuro);
 }
 
-/* Estilos do Formulário de Novo Chamado */
-.novo-chamado-form {
+/* Cabeçalho do formulário (título + botão fechar) */
+.form-header {
   position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 25px;
-  background-color: #f8f9fa;
-  border-radius: 6px;
-  border: 1px solid var(--border-color);
-  
-  /* Animação de expansão e retração */
-  overflow: hidden;
-  max-height: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-  opacity: 0;
-  transition: max-height 0.7s ease-in-out, padding 0.5s ease, opacity 0.5s ease, margin 0.5s ease;
+  justify-content: center; /* centraliza o título */
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-/* Classe que ativa a visibilidade e animação */
-.novo-chamado-form.visible {
-  max-height: 600px; /* Altura máxima que o form pode atingir */
-  opacity: 1;
-  padding: 25px;
-  margin-top: 10px;
-}
-
-.novo-chamado-form h3 {
-  width: 100%;
-  color: var(--senai-azul-principal);
-  font-size: 1.4em;
-  margin-bottom: 10px;
+.form-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--white);
   text-align: center;
+  flex: 1;
 }
 
-/* Botão de fechar (X) */
-.close-btn {
+.form-header .close-btn {
   position: absolute;
-  top: 10px;
-  right: 15px;
-  background: none;
+  right: 0; /* botão no canto direito */
+  background: var(--senai-vermelho-principal);
   border: none;
-  font-size: 2.2em;
-  line-height: 1;
-  color: #aaa;
+  border-radius: 6px;
+  color: var(--white);
+  font-size: 1.2rem;
+  padding: 5px 10px;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: background 0.2s ease;
+}
+
+.form-header .close-btn:hover {
+  background: var(--senai-vermelho-escuro);
+}
+
+
+
+
+/* Botão de fechar */
+.close-btn {
+  background: transparent;
+  border: none;
+  color: var(--texto-secundario);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .close-btn:hover {
-  color: var(--text-color);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--senai-vermelho-principal);
 }
 
-.novo-chamado-form .input-group {
+
+
+
+
+/* ===== FORMULÁRIO NOVO CHAMADO ===== */
+.novo-chamado-form {
+  background: #1e1e1e;
+  border: 1px solid var(--senai-cinza-borda);
+  border-radius: 14px;
+  padding: 25px;
+  width: 100%;
+  max-width: 650px; /* Aumentei pra caber melhor lado a lado */
+  margin: 0 auto 30px auto;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
   display: flex;
   flex-direction: column;
-  width: 100%;
+  gap: 18px;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.novo-chamado-form label {
+.novo-chamado-form h3 {
+  font-size: 1.3rem;
+  font-weight: bold;
   margin-bottom: 5px;
-  font-weight: 600;
-  color: var(--senai-azul-principal);
+  color: var(--white);
+  text-align: center;
 }
 
-.novo-chamado-form input[type="text"],
+/* Inputs e selects */
+.novo-chamado-form input,
 .novo-chamado-form select,
 .novo-chamado-form textarea {
   width: 100%;
-  padding: 12px 15px;
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
-  font-size: 1rem;
-  font-family: inherit;
-  outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--senai-cinza-borda);
+  background: #2a2a2a;
+  color: var(--white);
+  font-size: 0.95rem;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Estilo para o select parecer com o input */
-.novo-chamado-form select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23005197%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E');
-  background-repeat: no-repeat;
-  background-position: right 15px top 50%;
-  background-size: .65em auto;
-}
-
-.novo-chamado-form textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
-.novo-chamado-form input[type="text"]:focus,
+.novo-chamado-form input:focus,
 .novo-chamado-form select:focus,
 .novo-chamado-form textarea:focus {
-  border-color: var(--senai-azul-principal);
-  box-shadow: 0 0 0 3px rgba(0, 81, 151, 0.15);
+  outline: none;
+  border-color: var(--senai-vermelho-principal);
+  box-shadow: 0 0 6px rgba(209, 0, 31, 0.4);
 }
 
-.novo-chamado-form .submit-button {
-  background-color: var(--senai-laranja-destaque);
+/* Botão enviar */
+.novo-chamado-form button {
+  background: var(--senai-vermelho-principal);
   color: var(--white);
+  padding: 12px;
   border: none;
-  padding: 12px 25px;
-  border-radius: 5px;
-  cursor: pointer;
+  border-radius: 10px;
   font-size: 1rem;
-  font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-top: 10px; /* Espaço antes do botão */
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.novo-chamado-form .submit-button:hover {
-  background-color: #e07010;
+.novo-chamado-form button:hover {
+  background: var(--senai-vermelho-escuro);
   transform: translateY(-2px);
 }
 
-
-/* --- ESTILOS DA TABELA --- */
-.chamados-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+/* Campos lado a lado */
+.novo-chamado-form .linha-dupla {
+  display: flex;
+  gap: 15px;
 }
 
-.chamados-table th, .chamados-table td {
-  padding: 15px;
-  border-bottom: 1px solid var(--border-color);
-  text-align: left;
-  vertical-align: middle;
+.novo-chamado-form .linha-dupla .input-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.chamados-table thead tr {
-  background-color: var(--table-header-bg);
-  font-weight: bold;
-  color: var(--senai-azul-principal);
+/* Responsividade - no celular empilha */
+@media (max-width: 600px) {
+  .novo-chamado-form .linha-dupla {
+    flex-direction: column;
+  }
 }
 
-.chamados-table tbody tr:last-child td { border-bottom: none; }
-.chamados-table tbody tr:hover { background-color: #f1f5f9; }
-
-/* Estilos do Status (Badge) */
-.status-badge { display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; }
-.status-badge.aberto { background-color: var(--status-aberto-bg); color: var(--status-aberto-color); }
-.status-badge.em-andamento { background-color: var(--status-andamento-bg); color: var(--status-andamento-color); }
-.status-badge.concluido { background-color: var(--status-concluido-bg); color: var(--status-concluido-color); }
-
-/* --- RESPONSIVIDADE --- */
-@media (max-width: 768px) {
-  .chamados-container { margin: 10px; padding: 15px; }
-  .chamados-title { font-size: 1.8em; }
-  
-  .chamados-table thead { display: none; }
-  .chamados-table, .chamados-table tbody, .chamados-table tr, .chamados-table td { display: block; width: 100%; }
-  .chamados-table tr { margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 5px; padding: 10px; }
-  .chamados-table td { text-align: right; padding-left: 50%; position: relative; border: none; }
-  .chamados-table td::before { content: attr(data-label); position: absolute; left: 10px; width: calc(50% - 20px); text-align: left; font-weight: bold; color: var(--senai-azul-principal); }
+/* Animação suave na abertura */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

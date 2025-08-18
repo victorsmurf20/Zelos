@@ -1,66 +1,84 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
+import './tecnico.css';
 
 const chamadosTecnicoIniciais = [
-  { id: 1, protocolo: '#2025-0158', assunto: 'Computador do laboratório 3 não liga', categoria: 'Manutenção de Equipamento', data: '28/07/2025', status: 'Aberto' },
-  { id: 1, protocolo: '#2025-0158', assunto: 'Computador do laboratório 3 não liga', categoria: 'Manutenção de Equipamento', data: '28/07/2025', status: 'checkList' },
-  { id: 2, protocolo: '#2025-0159', assunto: 'Não consigo acessar o Wi-Fi', categoria: 'Problemas com Wi-Fi', data: '30/07/2025', status: 'Em Andamento' },
+  { id: 1, protocolo: '#2025-0158', assunto: 'Computador do laboratório 3 não liga', categoria: 'Manutenção de Equipamento', data: '28/07/2025', status: 'Aberto', checklist: ['Verificar energia', 'Testar cabo', 'Reiniciar PC'] },
+  { id: 2, protocolo: '#2025-0159', assunto: 'Não consigo acessar o Wi-Fi', categoria: 'Problemas com Wi-Fi', data: '30/07/2025', status: 'Aberto', checklist: ['Checar senha', 'Reiniciar roteador', 'Verificar sinal'] },
+  { id: 3, protocolo: '#2025-0160', assunto: 'Tela do projetor quebrada', categoria: 'Equipamento Audiovisual', data: '02/08/2025', status: 'Aberto', checklist: ['Trocar lâmpada', 'Limpar lente', 'Testar conexão HDMI'] },
 ];
 
 export default function ChamadosTecnico() {
   const [chamados, setChamados] = useState(chamadosTecnicoIniciais);
+  const [modalAberto, setModalAberto] = useState(false);
+  const [chamadoSelecionado, setChamadoSelecionado] = useState(null);
 
-  function marcarResolvido(id) {
+  const marcarResolvido = (id) => {
     setChamados(chamados.map(c => c.id === id ? { ...c, status: 'Concluído' } : c));
-  }
+  };
+
+  const abrirModal = (chamado) => {
+    setChamadoSelecionado(chamado);
+    setModalAberto(true);
+  };
+
+  const fecharModal = () => {
+    setModalAberto(false);
+    setChamadoSelecionado(null);
+  };
+
+  const statusClasses = {
+    'Aberto': 'status-aberto',
+    'Em Andamento': 'status-andamento',
+    'Checklist': 'status-checklist',
+    'Concluído': 'status-concluido'
+  };
 
   return (
-    <div style={{padding:'20px', fontFamily:'Arial', maxWidth:'900px', margin:'auto'}}>
-      <h2 style={{color:'#002366'}}>Chamados para Técnicos</h2>
-      <table style={{width:'100%', borderCollapse:'collapse'}}>
-        <thead>
-          <tr style={{background:'#f0f0f0'}}>
-            <th style={{padding:'10px', border:'1px solid #ccc'}}>Protocolo</th>
-            <th style={{padding:'10px', border:'1px solid #ccc'}}>Assunto</th>
-            <th style={{padding:'10px', border:'1px solid #ccc'}}>Categoria</th>
-            <th style={{padding:'10px', border:'1px solid #ccc'}}>Data</th>
-            <th style={{padding:'10px', border:'1px solid #ccc'}}>Status</th>
-            <th style={{padding:'10px', border:'1px solid #ccc'}}>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {chamados.map(c => (
-            <tr key={c.id}>
-              <td style={{padding:'10px', border:'1px solid #ccc'}}>{c.protocolo}</td>
-              <td style={{padding:'10px', border:'1px solid #ccc'}}>{c.assunto}</td>
-              <td style={{padding:'10px', border:'1px solid #ccc'}}>{c.categoria}</td>
-              <td style={{padding:'10px', border:'1px solid #ccc'}}>{c.data}</td>
-              <td style={{padding:'10px', border:'1px solid #ccc'}}>
-                <span style={{
-                  padding:'5px 10px',
-                  borderRadius:'15px',
-                  backgroundColor: c.status === 'Aberto' ? '#cce5ff' : c.status === 'Em Andamento' ? '#e0bbff' : '#d4edda',
-                  color: c.status === 'Aberto' ? '#004085' : c.status === 'Em Andamento' ? '#4b0082' : '#155724',
-                  fontWeight: 'bold',
-                  fontSize: '0.9rem',
-                }}>
-                  {c.status}
-                </span>
-              </td>
-              <td style={{padding:'10px', border:'1px solid #ccc'}}>
-                {(c.status === 'Aberto' || c.status === 'Em Andamento') && (
-                  <button
-                    onClick={() => marcarResolvido(c.id)}
-                    style={{background:'#e66a0e', color:'white', border:'none', padding:'6px 12px', borderRadius:'5px', cursor:'pointer'}}
-                  >
-                    Marcar como Resolvido
-                  </button>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="tecnico-container">
+      <h2>📋 Chamados para Técnicos</h2>
+
+      <div className="chamados-lista">
+        {chamados.map(c => (
+          <div key={c.id} className="chamado-card">
+            <div className="chamado-header">
+              <span className="protocolo">{c.protocolo}</span>
+              <span className={`status ${statusClasses[c.status]}`}>{c.status}</span>
+            </div>
+
+            <h3>{c.assunto}</h3>
+            <p><b>Categoria:</b> {c.categoria}</p>
+            <p><b>Data:</b> {c.data}</p>
+
+            {(c.status !== 'Concluído') && (
+              <>
+                <button className="btn-resolvido" onClick={() => abrirModal(c)}>
+                  📋 Ver CheckList
+                </button>
+                <button className="btn-resolvido" onClick={() => marcarResolvido(c.id)}>
+                  ✅ Marcar como Resolvido
+                </button>
+              </>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* MODAL */}
+      {modalAberto && chamadoSelecionado && (
+        <div className="modal-overlay" onClick={fecharModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>{chamadoSelecionado.assunto}</h3>
+            <p><b>Categoria:</b> {chamadoSelecionado.categoria}</p>
+            <p><b>Data:</b> {chamadoSelecionado.data}</p>
+            <h4>CheckList:</h4>
+            <ul>
+              {chamadoSelecionado.checklist.map((item, idx) => <li key={idx}>{item}</li>)}
+            </ul>
+            <button className="btn-resolvido" onClick={fecharModal}>Fechar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

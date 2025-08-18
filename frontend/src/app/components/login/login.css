@@ -1,23 +1,66 @@
-/* --- RESET BÁSICO E ESTILOS DA PÁGINA --- */
+/* ==================== VARIÁVEIS ==================== */
+:root {
+  --cor-primaria: #E4002B;
+  --cor-primaria-hover: #ff002f;
+  --cor-fundo: #0D0D0D;
+  --cor-fundo-gradiente: #1a1a1a;
+  --cor-texto-principal: #ffffff;
+  --cor-texto-secundario: #A0A0A0;
+  --raio-borda: 20px;
+  --espacamento-padrao: 20px;
+}
+
+/* ==================== BASE ==================== */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, var(--cor-fundo), var(--cor-fundo-gradiente));
+  color: var(--cor-texto-principal);
 }
 
 .login-page {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  /* Cor de fundo preta profunda, como na imagem */
-  background-color: #0D0D0D;
-  color: #f1f1f1;
-  /* Nota: Para os gráficos de fundo (cubos, linhas), o ideal seria usar uma imagem */
-  /* background-image: url('caminho/para/imagem-de-fundo.png'); */
-  background-size: cover;
-  background-position: center;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
-/* --- CONTAINER PRINCIPAL (CENTRALIZA O FORMULÁRIO) --- */
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/caminho/para/sua-imagem.jpg') no-repeat center center;
+  background-size: cover;
+  opacity: 0.12;
+  z-index: -1;
+}
+
+/* ==================== CONTEÚDO ==================== */
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* ==================== CABEÇALHO ==================== */
+.login-header {
+  padding: 1.5rem 3rem;
+}
+
+.logo {
+  font-size: 1.2rem;
+  color: var(--cor-texto-principal);
+}
+
+.logo strong {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* ==================== FORMULÁRIO ==================== */
 .login-container {
   flex: 1;
   display: flex;
@@ -26,54 +69,53 @@ body {
   padding: 1rem;
 }
 
-/* --- FORMULÁRIO DE LOGIN --- */
 .login-form {
+  background: rgba(28, 28, 28, 0.95);
+  border-radius: var(--raio-borda);
   padding: 3rem;
-  /* Cor de fundo sólida cinza-escura do formulário */
-  background-color: #1C1C1C;
-  border-radius: 20px; /* Bordas mais arredondadas */
   width: 100%;
   max-width: 440px;
-  box-sizing: border-box;
-  text-align: left;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* --- TEXTOS DO FORMULÁRIO --- */
+.login-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.75);
+}
+
 .login-form h2 {
-  margin: 0;
+  margin: 0 0 0.5rem 0;
   font-size: 2.25rem;
-  color: #ffffff;
   font-weight: 700;
+  color: var(--cor-texto-principal);
 }
 
 .login-subtitle {
-  margin: 0.5rem 0 2.5rem 0;
-  color: #A0A0A0; /* Cinza claro para o subtítulo */
+  margin-bottom: 2.5rem;
+  color: var(--cor-texto-secundario);
   font-size: 1rem;
 }
 
-/* --- GRUPO DE INPUT (LABEL + CAMPO) --- */
 .input-group {
-  margin-bottom: 2rem;
+  margin-bottom: 1.8rem;
 }
 
 .input-group label {
   display: block;
   margin-bottom: 0.75rem;
-  color: #e0e0e0;
+  color: var(--cor-texto-secundario);
   font-weight: 500;
-  font-size: 1rem;
 }
 
 .input-group input {
   width: 100%;
   padding: 1rem;
-  /* Cor de fundo do input, mais escura que o form */
   background-color: #2D2D2D;
-  border: 1px solid #4A4A4A; /* Borda cinza */
+  border: 1px solid #3a3a3a;
   border-radius: 10px;
-  box-sizing: border-box;
-  color: #ffffff;
+  color: var(--cor-texto-principal);
   font-size: 1rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -84,75 +126,39 @@ body {
 
 .input-group input:focus {
   outline: none;
-  border-color: #E4002B; /* Borda vermelha SENAI ao focar */
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 8px rgba(228, 0, 43, 0.6);
 }
 
-/* --- BOTÃO DE AVANÇAR --- */
+/* ==================== BOTÃO ==================== */
 button {
   width: 100%;
   padding: 1rem;
   border: none;
-  border-radius: 10px; /* Mesma borda do input */
-  background-color: #E4002B; /* Vermelho SENAI */
-  color: white;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--cor-primaria), #c0001f);
+  color: var(--cor-texto-principal);
   font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  box-shadow: 0 6px 18px rgba(228,0,43,0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 button:hover {
-  background-color: #C30021; /* Vermelho mais escuro no hover */
+  background: linear-gradient(90deg, var(--cor-primaria-hover), #d10024);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(228,0,43,0.6);
 }
 
-/* --- CABEÇALHO E RODAPÉ (ELEMENTOS ADICIONAIS) --- */
-.login-header, .login-footer {
-  width: 100%;
-  padding: 1.5rem 3rem;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
+button:active {
+  transform: translateY(0);
 }
 
-.login-header {
-  justify-content: space-between;
-}
-
-.logo {
-  font-size: 1.2rem;
-  color: #fff;
-  font-weight: 300;
-}
-
-.logo strong {
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.header-actions {
-  display: flex;
-  gap: 1rem;
-  color: #fff;
-}
-
-.theme-toggle {
-  background-color: #000;
-  padding: 0.5rem;
-  border-radius: 20px;
-  cursor: pointer;
-}
-
-.manual-acesso {
-  background-color: #fff;
-  color: #000;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
+/* ==================== RODAPÉ ==================== */
 .login-footer {
-  justify-content: center;
+  padding: 1.5rem 3rem;
+  text-align: center;
+  color: var(--cor-texto-secundario);
   font-size: 0.9rem;
-  color: #A0A0A0;
 }
