@@ -1,5 +1,9 @@
+*{
+  font-family: montserrat, sans-serif;
+}
+
 :root {
-  --senai-vermelho-principal: #d1001f;
+  --senai-vermelho-principal: #c62828;
   --senai-vermelho-escuro: #a80017;
   --senai-cinza-fundo: #121212; /* fundo mais escuro */
   --senai-cinza-borda: #2a2a2a;
@@ -7,6 +11,103 @@
   --texto-secundario: #cccccc;
   --white: #ffffff;
 }
+
+/* ===== OVERLAY ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px); /* vidro esfumaçado */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ===== CONTEÚDO ===== */
+.modal-content {
+  background: linear-gradient(160deg, #1d1d1d, #242424);
+  padding: 32px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 620px;
+  color: var(--texto-principal);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  animation: scaleIn 0.25s ease-in-out;
+  position: relative;
+}
+
+/* ===== HEADER ===== */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--senai-vermelho-principal);
+  letter-spacing: 0.5px;
+}
+
+/* ===== BOTÃO FECHAR ===== */
+.modal-header .close-btn {
+  background: transparent;
+  border: none;
+  color: var(--texto-secundario);
+  font-size: 1.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.modal-header .close-btn:hover {
+  color: var(--senai-vermelho-principal);
+  transform: rotate(90deg) scale(1.15);
+}
+
+/* ===== CORPO ===== */
+.modal-content p {
+  font-size: 1rem;
+  margin: 10px 0;
+  color: var(--texto-secundario);
+  line-height: 1.6;
+}
+
+.modal-content strong {
+  color: var(--white);
+}
+
+.modal-content hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 18px 0;
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+
+
+
+
 
 /* ===== CONTAINER ===== */
 .chamados-container {
@@ -182,9 +283,6 @@
   background: var(--senai-vermelho-escuro);
 }
 
-
-
-
 /* Botão de fechar */
 .close-btn {
   background: transparent;
@@ -202,10 +300,6 @@
   background: rgba(255, 255, 255, 0.1);
   color: var(--senai-vermelho-principal);
 }
-
-
-
-
 
 /* ===== FORMULÁRIO NOVO CHAMADO ===== */
 .novo-chamado-form {

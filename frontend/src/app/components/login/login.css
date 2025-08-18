@@ -1,3 +1,7 @@
+*{
+  font-family: montserrat, sans-serif;
+}
+
 /* ==================== VARIÁVEIS ==================== */
 :root {
   --cor-primaria: #E4002B;
@@ -13,7 +17,6 @@
 /* ==================== BASE ==================== */
 body {
   margin: 0;
-  font-family: 'Segoe UI', Roboto, sans-serif;
   background: linear-gradient(135deg, var(--cor-fundo), var(--cor-fundo-gradiente));
   color: var(--cor-texto-principal);
 }

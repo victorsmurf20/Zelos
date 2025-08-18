@@ -1,0 +1,44 @@
+/* Header.css */
+header {
+  width: 100%;
+  background-color: #c62828; /* Azul SENAI */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+
+.logo img {
+  height: 50px;
+  object-fit: contain;
+}
+
+/* --- Estilos atualizados para o botão de Sair --- */
+.header-actions .logout-btn {
+  background-color: #c62828;
+  color: #ffffff;
+  padding: 2px 15px; /* Ajuste no padding */
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  /* Novas propriedades para alinhar ícone e texto */
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espaço entre o ícone e o texto */
+}
+
+.header-actions .logout-btn:hover {
+  background-color: #a80017;
+  transform: translateY(-1px);
+}
+
+/* Estilo para o ícone dentro do botão */
+.logout-btn .logout-icon {
+  width: 30px;  /* Defina um tamanho para o seu ícone */
+  height: 30px;
+}

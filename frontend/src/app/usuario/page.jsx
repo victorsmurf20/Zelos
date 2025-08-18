@@ -1,19 +1,20 @@
 'use client'
 import React, { useState } from 'react';
+import Header from '../components/headers/header.jsx'; // 1. Importando o Header
 import './usuario.css'; // Import do CSS
 
 const chamadosIniciais = [
-  { id: 1, protocolo: '#2025-0158', assunto: 'Computador do laboratório 3 não liga', categoria: 'Manutenção de Equipamento', data: '28/07/2025', status: 'Aberto' },
-  { id: 2, protocolo: '#2025-0159', assunto: 'Não consigo acessar o Wi-Fi', categoria: 'Problemas com Wi-Fi', data: '30/07/2025', status: 'Aberto' },
+  // ... (dados dos chamados permanecem os mesmos)
 ];
 
 export default function ChamadosUsuario() {
   const [chamados, setChamados] = useState(chamadosIniciais);
 
-  // Estados do form
+  // ... (todos os estados e funções permanecem os mesmos)
   const [titulo, setTitulo] = useState('');
   const [servico, setServico] = useState('');
   const [descricao, setDescricao] = useState('');
+  const [detalheAberto, setDetalheAberto] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   function abrirChamado(e) {
@@ -27,6 +28,7 @@ export default function ChamadosUsuario() {
       protocolo: `#2025-0${150 + chamados.length + 1}`,
       assunto: titulo,
       categoria: servico,
+      descricao: descricao,
       data: new Date().toLocaleDateString('pt-BR'),
       status: 'Aberto',
     };
@@ -45,96 +47,115 @@ export default function ChamadosUsuario() {
     }
   };
 
+
   return (
-    <div className="chamados-container">
-      <h2 className="chamados-title">Meus Chamados</h2>
+    // 2. Usando um Fragment <> para agrupar o Header e o conteúdo
+    <>
+      <Header /> {/* 3. Adicionando o componente Header aqui */}
+      
+      <div className="chamados-container">
+        <h2 className="chamados-title">Meus Chamados</h2>
 
-      {/* --- ABRIR NOVO CHAMADO --- */}
-      <div className="novo-chamado-container">
-        {!isFormVisible ? (
+        {/* --- ABRIR NOVO CHAMADO --- */}
+        <div className="novo-chamado-container">
+          {!isFormVisible ? (
+            <button className="abrir-chamado-btn" onClick={() => setIsFormVisible(true)}>
+              Abrir Novo Chamado
+            </button>
+          ) : (
+            <form onSubmit={abrirChamado} className={`novo-chamado-form ${isFormVisible ? 'visible' : ''}`}>
+              <div className="form-header">
+                <h3>Abrir Novo Chamado</h3>
+                <button type="button" className="close-btn" onClick={() => setIsFormVisible(false)}>
+                  &times;
+                </button>
+              </div>
 
-          <button className="abrir-chamado-btn" onClick={() => setIsFormVisible(true)}>
-            Abrir Novo Chamado
-          </button>
+              <div className="linha-dupla">
+                <div className="input-group">
+                  <label htmlFor="titulo">Título</label>
+                  <input
+                    id="titulo"
+                    type="text"
+                    placeholder="Ex: Impressora não funciona"
+                    value={titulo}
+                    onChange={e => setTitulo(e.target.value)}
+                    required
+                  />
+                </div>
 
-        ) : (
+                <div className="input-group">
+                  <label htmlFor="servico">Serviço</label>
+                  <select
+                    id="servico"
+                    value={servico}
+                    onChange={e => setServico(e.target.value)}
+                    required
+                  >
+                    <option value="" disabled>Selecione um tipo</option>
+                    <option value="Externo">Externo</option>
+                    <option value="Manutenção">Manutenção</option>
+                    <option value="Apoio Técnico">Apoio Técnico</option>
+                    <option value="Limpeza">Limpeza</option>
+                  </select>
+                </div>
+              </div>
 
-          <form onSubmit={abrirChamado} className={`novo-chamado-form ${isFormVisible ? 'visible' : ''}`}>
+              <div className="input-group">
+                <label htmlFor="descricao">Descrição</label>
+                <textarea
+                  id="descricao"
+                  placeholder="Descreva o problema ou a solicitação com mais detalhes."
+                  value={descricao}
+                  onChange={e => setDescricao(e.target.value)}
+                  required
+                  rows="4"
+                ></textarea>
+              </div>
 
-            <div className="form-header">
-              <h3>Abrir Novo Chamado</h3>
-              <button type="button" className="close-btn" onClick={() => setIsFormVisible(false)}>
-                &times;
+              <button type="submit" className="submit-button">
+                Enviar Chamado
+              </button>
+            </form>
+          )}
+        </div>
+
+        {/* --- LISTA DE CHAMADOS EM CARDS --- */}
+        <div className="meus-chamados-grid">
+          {chamados.map(c => (
+            <div key={c.id} className="meus-chamado-card">
+              <div className="meus-card-header">
+                <span className="protocolo">{c.protocolo}</span>
+                <span className={getStatusClass(c.status)}>{c.status}</span>
+              </div>
+              <h3>{c.assunto}</h3>
+              <p><strong>Categoria:</strong> {c.categoria}</p>
+              <p><strong>Data:</strong> {c.data}</p>
+              <button className="detalhes-btn" onClick={() => setDetalheAberto(c)}>
+                Ver Detalhes
               </button>
             </div>
+          ))}
+        </div>
 
-
-
-            {/* Linha dupla com Título + Serviço */}
-            <div className="linha-dupla">
-              <div className="input-group">
-                <label htmlFor="titulo">Título</label>
-                <input
-                  id="titulo"
-                  type="text"
-                  placeholder="Ex: Impressora não funciona"
-                  value={titulo}
-                  onChange={e => setTitulo(e.target.value)}
-                  required
-                />
+        {/* --- MODAL DETALHES --- */}
+        {detalheAberto && (
+          <div className="modal-overlay" onClick={() => setDetalheAberto(null)}>
+            <div className="modal-content" onClick={e => e.stopPropagation()}>
+              <div className="modal-header">
+                <h3>{detalheAberto.assunto}</h3>
+                <button className="close-btn" onClick={() => setDetalheAberto(null)}>&times;</button>
               </div>
-
-              <div className="input-group">
-                <label htmlFor="servico">Serviço</label>
-                <select
-                  id="servico"
-                  value={servico}
-                  onChange={e => setServico(e.target.value)}
-                  required
-                >
-                  <option value="" disabled>Selecione um tipo</option>
-                  <option value="Externo">Externo</option>
-                  <option value="Manutenção">Manutenção</option>
-                  <option value="Apoio Técnico">Apoio Técnico</option>
-                  <option value="Limpeza">Limpeza</option>
-                </select>
-              </div>
+              <p><strong>Protocolo:</strong> {detalheAberto.protocolo}</p>
+              <p><strong>Categoria:</strong> {detalheAberto.categoria}</p>
+              <p><strong>Data:</strong> {detalheAberto.data}</p>
+              <p><strong>Status:</strong> {detalheAberto.status}</p>
+              <hr />
+              <p><strong>Descrição:</strong> {detalheAberto.descricao}</p>
             </div>
-
-            <div className="input-group">
-              <label htmlFor="descricao">Descrição</label>
-              <textarea
-                id="descricao"
-                placeholder="Descreva o problema ou a solicitação com mais detalhes."
-                value={descricao}
-                onChange={e => setDescricao(e.target.value)}
-                required
-                rows="4"
-              ></textarea>
-            </div>
-
-            <button type="submit" className="submit-button">
-              Enviar Chamado
-            </button>
-          </form>
+          </div>
         )}
       </div>
-
-      {/* --- LISTA DE CHAMADOS EM CARDS --- */}
-      <div className="meus-chamados-grid">
-        {chamados.map(c => (
-          <div key={c.id} className="meus-chamado-card">
-            <div className="meus-card-header">
-              <span className="protocolo">{c.protocolo}</span>
-              <span className={getStatusClass(c.status)}>{c.status}</span>
-            </div>
-            <h3>{c.assunto}</h3>
-            <p><strong>Categoria:</strong> {c.categoria}</p>
-            <p><strong>Data:</strong> {c.data}</p>
-            <button className="detalhes-btn">Ver Detalhes</button>
-          </div>
-        ))}
-      </div>
-    </div>
+    </>
   );
 }

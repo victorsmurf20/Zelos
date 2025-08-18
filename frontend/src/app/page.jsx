@@ -9,7 +9,7 @@ const LoginPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log("Usuário (E-mail ou CPF):", user);
+    console.log("Usuário RA:", user);
     console.log("Senha:", password);
     // Lógica de autenticação aqui
   };
@@ -21,7 +21,7 @@ const LoginPage = () => {
       <div className="content">
         <header className="login-header">
           <div className="logo">
-            <strong>SENAI</strong> EDUCAÇÃO ONLINE
+            <strong>SENAI</strong> | CHAMADOS ONLINE
           </div>
         </header>
 
@@ -37,7 +37,7 @@ const LoginPage = () => {
                 id="user"
                 value={user}
                 onChange={(e) => setUser(e.target.value)}
-                placeholder="Insira seu e-mail ou CPF"
+                placeholder="Insira seu RA"
                 required
               />
             </div>
