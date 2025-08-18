@@ -5,13 +5,13 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 20px;
+  padding: 18px 20px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 
 .logo img {
-  height: 50px;
+  height: 45px;
   object-fit: contain;
 }
 
@@ -19,7 +19,7 @@ header {
 .header-actions .logout-btn {
   background-color: #c62828;
   color: #ffffff;
-  padding: 2px 15px; /* Ajuste no padding */
+  padding: 5px 5px; /* Ajuste no padding */
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
@@ -39,6 +39,6 @@ header {
 
 /* Estilo para o ícone dentro do botão */
 .logout-btn .logout-icon {
-  width: 30px;  /* Defina um tamanho para o seu ícone */
-  height: 30px;
+  width: 40px;  /* Defina um tamanho para o seu ícone */
+  height: 40px;
 }

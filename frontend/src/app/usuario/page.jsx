@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
-import Header from '../components/headers/header.jsx'; // 1. Importando o Header
-import './usuario.css'; // Import do CSS
+import Header from '../components/headers/header.jsx';
+import './usuario.css';
 
 const chamadosIniciais = [
   // ... (dados dos chamados permanecem os mesmos)
@@ -9,8 +9,6 @@ const chamadosIniciais = [
 
 export default function ChamadosUsuario() {
   const [chamados, setChamados] = useState(chamadosIniciais);
-
-  // ... (todos os estados e funções permanecem os mesmos)
   const [titulo, setTitulo] = useState('');
   const [servico, setServico] = useState('');
   const [descricao, setDescricao] = useState('');
@@ -52,9 +50,9 @@ export default function ChamadosUsuario() {
     // 2. Usando um Fragment <> para agrupar o Header e o conteúdo
     <>
       <Header /> {/* 3. Adicionando o componente Header aqui */}
-      
+
       <div className="chamados-container">
-        <h2 className="chamados-title">Meus Chamados</h2>
+        <h2 className="chamados-title">Abrir Chamados</h2>
 
         {/* --- ABRIR NOVO CHAMADO --- */}
         <div className="novo-chamado-container">
@@ -81,6 +79,7 @@ export default function ChamadosUsuario() {
                     value={titulo}
                     onChange={e => setTitulo(e.target.value)}
                     required
+                    maxLength={35} // AQUI: Limita o título a 50 caracteres
                   />
                 </div>
 
@@ -110,6 +109,7 @@ export default function ChamadosUsuario() {
                   onChange={e => setDescricao(e.target.value)}
                   required
                   rows="4"
+                  maxLength={250} // AQUI: Limita a descrição a 500 caracteres
                 ></textarea>
               </div>
 

@@ -7,7 +7,7 @@ const Header = () => {
     <header>
       <div className="logo">
         <img 
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/SENAI_logo.svg/2560px-SENAI_logo.svg.png" 
+          src="/Senai.png" 
           alt="Logo SENAI"
         />
       </div>

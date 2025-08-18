@@ -48,6 +48,7 @@ const LoginPage = () => {
                 type="password"
                 id="password"
                 value={password}
+                maxLength={25}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Digite sua senha"
                 required
