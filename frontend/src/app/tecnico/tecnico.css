@@ -249,7 +249,8 @@
   margin-top: auto; /* Empurra o rodapé para baixo */
 }
 
-.btn-atribuir, .btn-detalhes {
+/* Alteração: Adicionado .btn-concluir à regra base */
+.btn-atribuir, .btn-detalhes, .btn-concluir {
   border: none;
   padding: 0.6rem 1rem;
   border-radius: 6px;
@@ -275,6 +276,17 @@
 .btn-detalhes:hover {
   background-color: #4a505a;
 }
+
+/* NOVO ESTILO PARA O BOTÃO CONCLUIR */
+.btn-concluir {
+  background-color: var(--cor-concluido);
+  color: #1e2228; /* Cor escura para melhor contraste com o verde claro */
+}
+
+.btn-concluir:hover {
+  background-color: #6aa86c; /* Um tom de verde um pouco mais escuro */
+}
+/* FIM DO NOVO ESTILO */
 
 .mostrar-meus-chamados {
     display: flex;

@@ -7,45 +7,45 @@ import { motion, useMotionValue, useTransform } from 'framer-motion';
 const currentUserId = 1;
 
 const chamadosIniciais = [
-  { 
+  {
     id: 1,
-    protocolo: '#2025-0158', 
-    assunto: 'Computador do laboratório 3 não liga', 
+    protocolo: '#2025-0158',
+    assunto: 'Computador do laboratório 3 não liga',
     categoria: 'Manutenção de Equipamento',
-    data: '28/07/2025', 
+    data: '28/07/2025',
     status: 'PENDENTE',
     ownerId: 1,
     checklist: ['Verificar fonte de energia', 'Testar cabo de força', 'Analisar conexões da placa-mãe'],
     descricao: 'O computador da bancada 3 no laboratório de informática não está apresentando nenhum sinal de energia ao ser ligado. Nenhuma luz acende e a ventoinha não gira.'
   },
-  { 
+  {
     id: 2,
-    protocolo: '#2025-0159', 
-    assunto: 'Manutenção Preventiva Torno CNC', 
+    protocolo: '#2025-0159',
+    assunto: 'Manutenção Preventiva Torno CNC',
     categoria: 'Oficina Mecânica',
-    data: '27/07/2025', 
+    data: '27/07/2025',
     status: 'EM ANDAMENTO',
     ownerId: 2,
     checklist: ['Limpeza geral da máquina', 'Lubrificação dos eixos e barramentos', 'Verificação do painel de controle e software'],
     descricao: 'Manutenção preventiva periódica agendada para o Torno CNC. O técnico já iniciou o procedimento de limpeza e lubrificação.'
   },
-  { 
+  {
     id: 3,
-    protocolo: '#2025-0160', 
-    assunto: 'Formatar Computador da Recepção', 
+    protocolo: '#2025-0160',
+    assunto: 'Formatar Computador da Recepção',
     categoria: 'Infraestrutura TI',
-    data: '26/07/2025', 
+    data: '26/07/2025',
     status: 'CONCLUÍDO',
     ownerId: 1,
     checklist: ['Realizar backup de arquivos importantes', 'Instalar Sistema Operacional e drivers', 'Instalar softwares essenciais (Office, etc)'],
     descricao: 'O computador da recepção foi formatado com sucesso. Todos os programas necessários foram reinstalados e o backup restaurado.'
   },
-  { 
+  {
     id: 4,
-    protocolo: '#2025-0161', 
-    assunto: 'Rede Wi-Fi instável na biblioteca', 
+    protocolo: '#2025-0161',
+    assunto: 'Rede Wi-Fi instável na biblioteca',
     categoria: 'Infraestrutura TI',
-    data: '29/07/2025', 
+    data: '29/07/2025',
     status: 'PENDENTE',
     ownerId: 2,
     checklist: ['Verificar roteador', 'Testar cabos de rede', 'Analisar sinal'],
@@ -75,13 +75,24 @@ export default function PainelChamados() {
   const [modalAberto, setModalAberto] = useState(false);
   const [chamadoSelecionado, setChamadoSelecionado] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [showMyChamadosOnly, setShowMyChamadosOnly] = useState(false);
+  const [showInProgressOnly, setShowInProgressOnly] = useState(false);
 
   const handleAssignToMe = (chamadoId) => {
-    setChamados(prevChamados => 
-      prevChamados.map(chamado => 
-        chamado.id === chamadoId 
-          ? { ...chamado, status: 'EM ANDAMENTO' } 
+    setChamados(prevChamados =>
+      prevChamados.map(chamado =>
+        chamado.id === chamadoId
+          ? { ...chamado, status: 'EM ANDAMENTO' }
+          : chamado
+      )
+    );
+  };
+
+  // NOVA FUNÇÃO: para alterar o status do chamado para 'CONCLUÍDO'
+  const handleConcluirChamado = (chamadoId) => {
+    setChamados(prevChamados =>
+      prevChamados.map(chamado =>
+        chamado.id === chamadoId
+          ? { ...chamado, status: 'CONCLUÍDO' }
           : chamado
       )
     );
@@ -99,8 +110,8 @@ export default function PainelChamados() {
 
   const filteredChamados = chamados
     .filter(chamado => {
-      if (!showMyChamadosOnly) return true;
-      return chamado.ownerId === currentUserId;
+      if (!showInProgressOnly) return true;
+      return chamado.status === 'EM ANDAMENTO';
     })
     .filter(chamado => {
       const lowerSearchTerm = searchTerm.toLowerCase();
@@ -146,8 +157,8 @@ export default function PainelChamados() {
               transition={shape.transition}
             />
           ))}
-          <motion.svg 
-            className="connecting-lines" 
+          <motion.svg
+            className="connecting-lines"
             style={{ x: parallaxX, y: parallaxY }}
           >
             <motion.line
@@ -190,26 +201,26 @@ export default function PainelChamados() {
         <Header />
         <div className="painel-container">
           <div className="painel-header">
-              <div>
-                  <h1>Painel de Chamados</h1>
-              </div>
-              <div className="mostrar-meus-chamados">
-                  <span>Mostrar apenas meus chamados</span>
-                  <label className="switch">
-                      <input 
-                        type="checkbox" 
-                        checked={showMyChamadosOnly}
-                        onChange={(e) => setShowMyChamadosOnly(e.target.checked)}
-                      />
-                      <span className="slider round"></span>
-                  </label>
-              </div>
+            <div>
+              <h1>Painel de Chamados</h1>
+            </div>
+            <div className="mostrar-meus-chamados">
+              <span>Mostrar apenas "Em Andamento"</span>
+              <label className="switch">
+                <input
+                  type="checkbox"
+                  checked={showInProgressOnly}
+                  onChange={(e) => setShowInProgressOnly(e.target.checked)}
+                />
+                <span className="slider round"></span>
+              </label>
+            </div>
           </div>
 
           <div className="filtros-container">
-            <input 
-              type="search" 
-              placeholder="🔎 Buscar por título, ID, setor..." 
+            <input
+              type="search"
+              placeholder="🔎 Buscar por título, ID, setor..."
               className="search-bar"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -251,7 +262,9 @@ export default function PainelChamados() {
                   <h3 className="card-title">{c.assunto}</h3>
                   <p className="card-category em-andamento">{c.categoria}</p>
                   <p className="card-data">Data: {c.data}</p>
-                   <div className="card-footer">
+                  <div className="card-footer">
+                    {/* BOTÃO "CONCLUIR" ADICIONADO AQUI */}
+                      <button className="btn-concluir" onClick={() => handleConcluirChamado(c.id)}>Concluir</button>
                     <button className="btn-detalhes" onClick={() => abrirModalDetalhes(c)}>Detalhes</button>
                   </div>
                 </div>
@@ -271,7 +284,7 @@ export default function PainelChamados() {
                   <h3 className="card-title">{c.assunto}</h3>
                   <p className="card-category concluido">{c.categoria}</p>
                   <p className="card-data">Data: {c.data}</p>
-                   <div className="card-footer">
+                  <div className="card-footer">
                     <button className="btn-detalhes" onClick={() => abrirModalDetalhes(c)}>Detalhes</button>
                   </div>
                 </div>
@@ -280,28 +293,28 @@ export default function PainelChamados() {
           </div>
         </div>
 
-          {modalAberto && chamadoSelecionado && (
-            <div className="modal-overlay" onClick={fecharModal}>
-              <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                <h3>{chamadoSelecionado.assunto}</h3>
-                <p><strong>Protocolo:</strong> {chamadoSelecionado.protocolo}</p>
-                <p><strong>Categoria:</strong> {chamadoSelecionado.categoria}</p>
-                <p><strong>Data:</strong> {chamadoSelecionado.data}</p>
-                
-                <h4>Descrição:</h4>
-                <p>{chamadoSelecionado.descricao}</p>
-                
-                <h4>Checklist:</h4>
-                <ul className="checklist">
-                  {chamadoSelecionado.checklist.map((item, index) => (
-                      <li key={index}>{item}</li>
-                  ))}
-                </ul>
+        {modalAberto && chamadoSelecionado && (
+          <div className="modal-overlay" onClick={fecharModal}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <h3>{chamadoSelecionado.assunto}</h3>
+              <p><strong>Protocolo:</strong> {chamadoSelecionado.protocolo}</p>
+              <p><strong>Categoria:</strong> {chamadoSelecionado.categoria}</p>
+              <p><strong>Data:</strong> {chamadoSelecionado.data}</p>
 
-                <button className="btn-fechar-modal" onClick={fecharModal}>Fechar</button>
-              </div>
+              <h4>Descrição:</h4>
+              <p>{chamadoSelecionado.descricao}</p>
+
+              <h4>Checklist:</h4>
+              <ul className="checklist">
+                {chamadoSelecionado.checklist.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+
+              <button className="btn-fechar-modal" onClick={fecharModal}>Fechar</button>
             </div>
-          )}
+          </div>
+        )}
       </div>
     </motion.div>
   );

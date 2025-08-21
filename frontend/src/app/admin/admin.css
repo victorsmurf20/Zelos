@@ -183,7 +183,13 @@
 }
 
 .col-protocolo, .col-data { flex-basis: 15%; }
-.col-assunto { flex: 1; padding-right: 1rem; }
+.col-assunto { 
+  flex: 1; 
+  padding-right: 1rem; 
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 0;
+}
 .col-status { flex-basis: 15%; }
 .col-acoes { 
   flex-basis: 20%; 
@@ -192,6 +198,15 @@
   gap: 0.5rem; 
   justify-content: flex-end;
 }
+
+/* --- ALTERAÇÃO AQUI: Estilo para o texto "Ver mais..." --- */
+.ver-mais-text {
+  color: var(--cor-texto-secundario);
+  font-style: italic;
+  font-size: 0.8rem;
+  margin-left: 4px;
+}
+/* --- FIM DA ALTERAÇÃO --- */
 
 .btn-action { 
   background: none; 
@@ -272,6 +287,9 @@
   margin-bottom: 1rem; 
   line-height: 1.6; 
   color: var(--cor-texto-secundario); 
+  /* --- ALTERAÇÃO AQUI: Garante a quebra de linha no pop-up --- */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .details-view p strong { 

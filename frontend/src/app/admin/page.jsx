@@ -7,7 +7,7 @@ import { motion, useMotionValue, useTransform } from 'framer-motion';
 const chamadosAdmIniciais = [
   { id: 1, protocolo: '#2025-0158', assunto: 'Computador do laboratório 3 não liga', categoria: 'Manutenção de Equipamento', data: '28/07/2025', status: 'Aberto', descricao: 'O computador da bancada 3 no laboratório de informática não está apresentando nenhum sinal de energia ao ser ligado.' },
   { id: 2, protocolo: '#2025-0159', assunto: 'Não consigo acessar o Wi-Fi', categoria: 'Problemas com Wi-Fi', data: '30/07/2025', status: 'Em Andamento', descricao: 'A rede Wi-Fi da biblioteca está conectando mas não fornece acesso à internet.' },
-  { id: 3, protocolo: '#2025-0160', assunto: 'Problema ao acessar Portal do Aluno', categoria: 'Acesso ao Portal', data: '15/07/2025', status: 'Concluído', descricao: 'O portal do aluno estava apresentando erro 503, mas o problema já foi resolvido pela equipe de TI.' },
+  { id: 3, protocolo: '#2025-0160', assunto: 'Problema ao acessar o Portal do Aluno que possui um nome muito longo para testar a funcionalidade de quebra de linha e ver mais', categoria: 'Acesso ao Portal', data: '15/07/2025', status: 'Concluído', descricao: 'O portal do aluno estava apresentando erro 503, mas o problema já foi resolvido pela equipe de TI. A descrição também pode ser muito longa e precisa quebrar a linha corretamente dentro do modal para não estragar o layout, como por exemplo: umtextomuitolongosemespaçosprecisaquebrar.' },
   { id: 4, protocolo: '#2025-0161', assunto: 'Projetor da sala 5 não funciona', categoria: 'Manutenção de Equipamento', data: '01/08/2025', status: 'Aberto', descricao: 'A lâmpada do projetor da sala 5 parece ter queimado, pois não emite mais luz.' },
 ];
 
@@ -23,6 +23,9 @@ export default function ChamadosAdm() {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [chamadoToDelete, setChamadoToDelete] = useState(null);
   const [isReadyToDelete, setIsReadyToDelete] = useState(false);
+
+  // Define o limite de caracteres para o "Assunto" na lista
+  const MAX_ASSUNTO_LENGTH = 50;
 
   const handleOpenModal = (mode, chamado = null) => {
     setModalMode(mode);
@@ -131,7 +134,17 @@ export default function ChamadosAdm() {
             {filteredChamados.map(c => (
               <div key={c.id} className="chamado-list-item">
                 <div className="col-protocolo" data-label="Protocolo">{c.protocolo}</div>
-                <div className="col-assunto" data-label="Assunto">{c.assunto}</div>
+                {/* // ALTERAÇÃO AQUI: Lógica para truncar o texto e adicionar "Ver mais..." */}
+                <div className="col-assunto" data-label="Assunto">
+                  {c.assunto.length > MAX_ASSUNTO_LENGTH ? (
+                    <span>
+                      {`${c.assunto.substring(0, MAX_ASSUNTO_LENGTH)}...`}
+                      <span className="ver-mais-text"> Ver mais...</span>
+                    </span>
+                  ) : (
+                    c.assunto
+                  )}
+                </div>
                 <div className="col-data" data-label="Data">{c.data}</div>
                 <div className="col-status" data-label="Status"><span className={`status-badge ${getStatusClass(c.status)}`}>{c.status}</span></div>
                 <div className="col-acoes" data-label="Ações">
