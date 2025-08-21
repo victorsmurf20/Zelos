@@ -1,23 +1,25 @@
 // Header.jsx
 import React from 'react';
-import './header.css'; // Import do CSS do Header
+import './header.css'; // O CSS que vamos modificar a seguir
 
 const Header = () => {
   return (
-    <header>
-      <div className="logo">
-        <img 
-          src="/Senai.png" 
-          alt="Logo SENAI"
-        />
-      </div>
+    <header className="main-header">
+      <div className="header-container">
+        <div className="logo">
+          <img 
+            src="/Senai.png" 
+            alt="Logo SENAI"
+          />
+        </div>
 
-      <div className="header-actions">
-        {/* O link agora leva para /login, como solicitado anteriormente */}
-        <a href="/login" className="logout-btn">
-          {/* 1. Corrigido o caminho da imagem */}
-          <img src="/exit.png" alt="Ícone de saída" className="logout-icon" />    
-        </a>
+        <div className="header-actions">
+          <a href="/" className="logout-btn">
+            <img src="/exit.png" alt="Ícone de saída" className="logout-icon" />
+            {/* Adicionando texto para clareza */}
+            <span>Sair</span>
+          </a>
+        </div>
       </div>
     </header>
   );

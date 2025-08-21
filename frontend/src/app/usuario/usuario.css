@@ -1,23 +1,119 @@
-*{
+.page-wrapper {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  background: linear-gradient(150deg, #000000, #1e2128, #282c34);
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.shapes-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Estilos base para todas as formas */
+.shape {
+  position: absolute;
+  will-change: transform;
+}
+
+/* Variações de aparência para as formas */
+.shape1 {
+  border-radius: 30%;
+  border: 2px solid #ef4444;
+  opacity: 0.5;
+  box-shadow: 0 0 15px 2px rgba(239, 68, 68, 0.3);
+}
+
+.shape2 {
+  border-radius: 50%;
+  background-color: #f87171;
+  opacity: 0.2;
+  filter: blur(2px);
+}
+
+.shape3 {
+  background-color: #d32f2f;
+  opacity: 0.3;
+  transform: rotate(45deg);
+}
+
+/* Linhas conectoras com um visual mais sutil */
+.connecting-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  filter: blur(1px);
+  will-change: transform;
+}
+
+/* Pontos flutuantes com variação de tamanho e brilho */
+.floating-point {
+  position: absolute;
+  background-color: #f87171;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 1px rgba(248, 113, 113, 0.5);
+  width: 3px;
+  height: 3px;
+  will-change: transform;
+}
+
+
+* {
   font-family: montserrat, sans-serif;
+  box-sizing: border-box;
 }
 
 :root {
   --senai-vermelho-principal: #c62828;
   --senai-vermelho-escuro: #a80017;
-  --senai-cinza-fundo: #121212; /* fundo mais escuro */
+  --senai-cinza-fundo: #121212;
   --senai-cinza-borda: #2a2a2a;
   --texto-principal: #ffffff;
   --texto-secundario: #cccccc;
   --white: #ffffff;
 }
 
-/* ===== OVERLAY ===== */
+/* ===== CONTAINER ===== */
+.chamados-container {
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== TÍTULO ===== */
+.chamados-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--white);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* ===== MODAL DE DETALHES ===== */
 .modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(6px); /* vidro esfumaçado */
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,14 +121,12 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
-/* ===== CONTEÚDO ===== */
 .modal-content {
   background: linear-gradient(160deg, #1d1d1d, #242424);
   padding: 32px;
   border-radius: 20px;
   width: 90%;
   max-width: 620px;
-  
   color: var(--texto-principal);
   border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
@@ -40,7 +134,6 @@
   position: relative;
 }
 
-/* ===== HEADER ===== */
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -58,7 +151,6 @@
   letter-spacing: 0.5px;
 }
 
-/* ===== BOTÃO FECHAR ===== */
 .modal-header .close-btn {
   background: transparent;
   border: none;
@@ -75,7 +167,6 @@
   transform: rotate(90deg) scale(1.15);
 }
 
-/* ===== CORPO ===== */
 .modal-content p {
   font-size: 1rem;
   margin: 10px 0;
@@ -93,42 +184,6 @@
   margin: 18px 0;
 }
 
-/* ===== ANIMAÇÕES ===== */
-@keyframes scaleIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-
-
-
-
-
-
-/* ===== CONTAINER ===== */
-.chamados-container {
-  padding: 40px 20px;
-  background: var(--senai-cinza-fundo);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* ===== TÍTULO ===== */
-.chamados-title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: var(--white);
-  margin-bottom: 30px;
-  text-align: center;
-}
-
 /* ===== GRID DE CARDS ===== */
 .meus-chamados-grid {
   display: grid;
@@ -138,13 +193,12 @@
   max-width: 1100px;
 }
 
-/* ===== CARD ===== */
 .meus-chamado-card {
-  background: #1e1e1e;
+  background: #1c1e24;
   border-radius: 12px;
   padding: 20px;
   border: 1px solid var(--senai-cinza-borda);
-  box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
   overflow-wrap: break-word;
@@ -154,10 +208,9 @@
 
 .meus-chamado-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
 }
 
-/* ===== CABEÇALHO DO CARD ===== */
 .meus-card-header {
   display: flex;
   justify-content: space-between;
@@ -171,7 +224,6 @@
   color: var(--senai-vermelho-principal);
 }
 
-/* ===== STATUS BADGES ===== */
 .status-badge {
   font-size: 0.85rem;
   font-weight: 600;
@@ -195,7 +247,6 @@
   color: #155724;
 }
 
-/* ===== TEXTO DO CARD ===== */
 .meus-chamado-card h3 {
   font-size: 1.2rem;
   margin-bottom: 10px;
@@ -209,7 +260,6 @@
   line-height: 1.4;
 }
 
-/* ===== BOTÃO DETALHES ===== */
 .detalhes-btn {
   margin-top: 15px;
   width: 100%;
@@ -228,10 +278,12 @@
   background-color: var(--senai-vermelho-escuro);
 }
 
-/* ===== BOTÃO ABRIR CHAMADO ===== */
+/* ===== FORMULÁRIO NOVO CHAMADO ===== */
 .novo-chamado-container {
   margin-bottom: 20px;
   text-align: center;
+  width: 100%;
+  max-width: 650px;
 }
 
 .abrir-chamado-btn {
@@ -250,11 +302,23 @@
   background: var(--senai-vermelho-escuro);
 }
 
-/* Cabeçalho do formulário (título + botão fechar) */
-.form-header {
-  position: relative;
+.novo-chamado-form {
+  background: #1c1e24;
+  border: 1px solid var(--senai-cinza-borda);
+  border-radius: 14px;
+  padding: 25px;
+  width: 100%;
+  margin: 0 auto 30px auto;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
   display: flex;
-  justify-content: center; /* centraliza o título */
+  flex-direction: column;
+  gap: 18px;
+  animation: formFadeIn 0.3s ease-in-out;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
 }
@@ -264,28 +328,8 @@
   font-size: 1.3rem;
   font-weight: bold;
   color: var(--white);
-  text-align: center;
-  flex: 1;
 }
 
-.form-header .close-btn {
-  position: absolute;
-  right: 0; /* botão no canto direito */
-  background: var(--senai-vermelho-principal);
-  border: none;
-  border-radius: 6px;
-  color: var(--white);
-  font-size: 1.2rem;
-  padding: 5px 10px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.form-header .close-btn:hover {
-  background: var(--senai-vermelho-escuro);
-}
-
-/* Botão de fechar */
 .close-btn {
   background: transparent;
   border: none;
@@ -299,35 +343,10 @@
 }
 
 .close-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: #1c1e24;
   color: var(--senai-vermelho-principal);
 }
 
-/* ===== FORMULÁRIO NOVO CHAMADO ===== */
-.novo-chamado-form {
-  background: #1e1e1e;
-  border: 1px solid var(--senai-cinza-borda);
-  border-radius: 14px;
-  padding: 25px;
-  width: 100%;
-  max-width: 650px; /* Aumentei pra caber melhor lado a lado */
-  margin: 0 auto 30px auto;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.novo-chamado-form h3 {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: var(--white);
-  text-align: center;
-}
-
-/* Inputs e selects */
 .novo-chamado-form input,
 .novo-chamado-form select,
 .novo-chamado-form textarea {
@@ -335,7 +354,7 @@
   padding: 12px 14px;
   border-radius: 8px;
   border: 1px solid var(--senai-cinza-borda);
-  background: #2a2a2a;
+  background: #1c1e24;
   color: var(--white);
   font-size: 0.95rem;
   transition: border 0.2s ease, box-shadow 0.2s ease;
@@ -349,8 +368,7 @@
   box-shadow: 0 0 6px rgba(209, 0, 31, 0.4);
 }
 
-/* Botão enviar */
-.novo-chamado-form button {
+.submit-button {
   background: var(--senai-vermelho-principal);
   color: var(--white);
   padding: 12px;
@@ -362,32 +380,59 @@
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.novo-chamado-form button:hover {
+.submit-button:hover {
   background: var(--senai-vermelho-escuro);
   transform: translateY(-2px);
 }
 
-/* Campos lado a lado */
-.novo-chamado-form .linha-dupla {
+.linha-dupla {
   display: flex;
   gap: 15px;
 }
 
-.novo-chamado-form .linha-dupla .input-group {
+.linha-dupla .input-group {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* Responsividade - no celular empilha */
 @media (max-width: 600px) {
-  .novo-chamado-form .linha-dupla {
+  .linha-dupla {
     flex-direction: column;
   }
 }
 
-/* Animação suave na abertura */
+/* ===== ANIMAÇÕES ===== */
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes formFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
